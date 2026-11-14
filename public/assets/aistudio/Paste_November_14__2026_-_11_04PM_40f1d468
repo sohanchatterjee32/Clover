@@ -1,0 +1,2275 @@
+# BUILD CLOVER — A COMPLETE, PRODUCTION-READY CAREER DOCUMENT STUDIO
+
+## 1. YOUR ROLE AND PRIMARY OBJECTIVE
+
+Act as a principal full-stack engineer, senior React and Next.js architect, product designer, UX researcher, accessibility specialist, and QA engineer.
+
+Your assignment is to design and implement **CLOVER**, a fully functional, polished, browser-based career document studio.
+
+CLOVER is not simply a conventional resume generator. It is a personal career-document workspace that enables users to create, edit, organize, customize, evaluate, and export professional resumes.
+
+The finished application must be suitable for public deployment on Vercel and professional demonstration.
+
+This is an implementation task, not a design exercise.
+
+Do not deliver:
+- A static landing page.
+- A clickable prototype.
+- A collection of non-functional screens.
+- A partially implemented application.
+- An interface containing fake buttons.
+- A resume preview that does not reflect the actual editor data.
+- A PDF exporter that creates a different design from the selected preview.
+- Placeholder functionality presented as completed functionality.
+
+Every major feature described below must be implemented and connected to the application’s actual state.
+
+### The central product principle
+
+Build an original product with its own identity and user experience.
+
+The application must not reproduce another resume builder's branding, visual design, screen composition, navigation, template layouts, text, sample candidate, or distinctive interactions.
+
+Treat this specification as a functional requirements document, not as a visual reference to copy.
+
+Make independent design decisions.
+
+Do not reuse another product's:
+- Brand name or logo.
+- Color combination.
+- Exact layout structure.
+- Screen arrangement.
+- Template designs.
+- Sample resume content.
+- Marketing text.
+- Unique icons or illustrations.
+- Component styling.
+- Interface microcopy.
+
+The end result must feel like an independently conceived commercial software product.
+
+---
+
+# 2. PRODUCT IDENTITY AND BRAND DIRECTION
+
+## Product name
+
+CLOVER
+
+## Product category
+
+Career Document Studio
+
+## Product positioning
+
+A thoughtfully designed workspace for building professional resumes and improving career documents.
+
+## Brand personality
+
+- Intelligent.
+- Editorial.
+- Professional.
+- Minimal.
+- Dependable.
+- Modern.
+- Human-centered.
+- Detail-oriented.
+
+CLOVER should feel more like a premium professional writing workspace than a conventional form-based resume generator.
+
+### Original visual identity
+
+Use a distinctive editorial design system.
+
+Primary background:
+- Warm ivory: `#F6F3ED`
+
+Primary brand:
+- Deep forest green: `#183B36`
+
+Secondary accent:
+- Burnished amber: `#D69A43`
+
+Main text:
+- Dark graphite: `#293330`
+
+Secondary text:
+- Muted green-gray: `#738078`
+
+Borders:
+- Soft neutral gray: `#E4E1D9`
+
+Surface:
+- White: `#FFFFFF`
+
+Use this palette consistently through CSS variables.
+
+Do not use purple gradients, conventional indigo SaaS styling, excessive shadows, glassmorphism, or decorative dashboard elements.
+
+### Typography
+
+Use an editorial typography system:
+
+- A refined serif typeface for important headings and document titles.
+- A clean sans-serif typeface for application navigation and form controls.
+- Highly readable typography in resume documents.
+- Consistent font weights and line heights.
+- Strong separation between headings, labels, supporting information, and body text.
+
+Use appropriate fonts through `next/font` where practical, with dependable fallback fonts.
+
+### Visual design principles
+
+1. Favor intentional whitespace.
+2. Use thin borders rather than excessive shadows.
+3. Make the resume itself the visual centerpiece.
+4. Use consistent alignment and spacing.
+5. Keep interactions subtle and purposeful.
+6. Avoid unnecessary animation.
+7. Use consistent iconography through Lucide React.
+8. Make the product feel premium without unnecessary decoration.
+
+Do not use stock illustrations.
+
+Do not fill space with decorative graphics that do not contribute to functionality.
+
+---
+
+# 3. TECHNOLOGY STACK AND ARCHITECTURE
+
+Use the following technology stack:
+
+Frontend:
+- Next.js with App Router.
+- React.
+- TypeScript.
+- Tailwind CSS.
+- shadcn/ui.
+- Lucide React.
+
+State management:
+- Zustand or an equally well-structured React state architecture.
+
+Persistence:
+- localStorage for application metadata and resume information.
+- IndexedDB for uploaded image files and other binary assets where necessary.
+
+PDF generation:
+- jsPDF.
+- html2canvas-pro.
+
+Utilities:
+- date-fns for date formatting.
+- Zod for validation where useful.
+
+Drag-and-drop:
+- Use a maintained accessible drag-and-drop library if needed.
+
+### Architecture requirements
+
+Build reusable components.
+
+Separate:
+- Resume data and types.
+- State management.
+- Persistence.
+- Validation.
+- Resume rendering.
+- Template rendering.
+- Document pagination.
+- PDF generation.
+- Writing-assistant logic.
+- Career-fit analysis.
+- User interface components.
+
+Do not put the entire application in one enormous component.
+
+### Explicitly prohibited
+
+Do not introduce unnecessary infrastructure.
+
+The initial application must work without:
+
+- User authentication.
+- A remote database.
+- Supabase.
+- Firebase.
+- External AI APIs.
+- API keys.
+- Paid services.
+- Server-side PDF generation.
+- Mandatory third-party accounts.
+
+The application must operate directly in the user's browser after deployment.
+
+Do not make network calls merely to implement functionality that can be handled locally.
+
+---
+
+# 4. APPLICATION INFORMATION ARCHITECTURE
+
+CLOVER must have an original workspace-oriented interface.
+
+Do not use a conventional two-panel form-and-preview layout as the entire product architecture.
+
+Build a three-part professional workbench.
+
+## Desktop application structure
+
+### A. Top application header
+
+Include:
+
+- CLOVER wordmark.
+- Current document name.
+- Save status indicator.
+- Undo and redo controls where practical.
+- Document actions menu.
+- Export button.
+- New document action.
+
+Display meaningful saving states:
+
+- Saving changes.
+- All changes saved.
+- Unable to save.
+
+Never claim that data has been saved before persistence succeeds.
+
+### B. Left navigation rail
+
+Create a narrow, persistent navigation rail.
+
+Navigation items:
+
+1. Overview.
+2. Personal Profile.
+3. Experience.
+4. Education.
+5. Skills.
+6. Additional Sections.
+7. Design Studio.
+8. Career Review.
+9. Export Center.
+
+Each navigation item must:
+- Have an appropriate Lucide icon.
+- Show its active state.
+- Navigate to the corresponding workspace area.
+- Preserve the current document state.
+- Provide appropriate keyboard accessibility.
+
+### C. Central editing workspace
+
+The main workspace contains the active editor.
+
+Do not display every input field simultaneously.
+
+Use an organized, progressive editing experience.
+
+For example:
+
+When the user opens Experience, show:
+- Section heading.
+- Short explanatory text.
+- Existing experience entries.
+- Add Experience action.
+- Editable experience cards.
+- Entry-level validation.
+- Reordering controls.
+
+Use the same approach for other sections.
+
+### D. Resume document canvas
+
+Provide a dedicated document canvas on the right side of the desktop workspace.
+
+The preview must:
+- Render the actual selected resume design.
+- Update immediately when information changes.
+- Maintain A4 document proportions.
+- Support zoom controls.
+- Support multiple pages.
+- Show the correct selected template.
+- Show the selected accent color.
+- Display uploaded photos.
+- Hide genuinely empty sections.
+
+The preview should feel like viewing a professional document on a digital desk.
+
+### E. Career Review
+
+Career Review must be a separate workspace destination.
+
+Do not place the ATS score as a decorative dashboard card above the resume preview.
+
+Provide a focused review screen containing:
+
+- Resume completeness.
+- Contact information checks.
+- Content quality checks.
+- Experience quality checks.
+- Missing information warnings.
+- Keyword coverage analysis.
+- Improvement recommendations.
+
+This should feel like a document-quality review tool.
+
+---
+
+# 5. RESPONSIVE APPLICATION DESIGN
+
+Desktop:
+- Full workbench experience.
+- Persistent navigation.
+- Central editing workspace.
+- Dedicated live resume canvas.
+
+Tablet:
+- Adapt the navigation rail.
+- Allow the editor and preview to share available space.
+- Provide a collapsible preview where necessary.
+
+Mobile:
+- Use a mobile-first navigation system.
+- Provide clear Editor and Preview modes.
+- Keep document editing comfortable.
+- Avoid squeezing the full desktop interface into a narrow viewport.
+- Keep primary actions accessible.
+- Allow users to switch between editing and viewing.
+- Make PDF download functional.
+
+Test the application at:
+- 1920 × 1080.
+- 1440 × 900.
+- 1366 × 768.
+- 768 × 1024.
+- 390 × 844.
+- 360 × 800.
+
+Prevent horizontal overflow.
+
+---
+
+# 6. DOCUMENT MANAGEMENT
+
+Allow users to manage resume documents locally.
+
+Implement:
+
+- Create new document.
+- Rename document.
+- Duplicate document.
+- Delete document.
+- Restore sample document.
+- Open an existing local document.
+
+Each document must have:
+- A unique ID.
+- A display name.
+- Creation timestamp.
+- Last-updated timestamp.
+- Resume data.
+- Template selection.
+- Design preferences.
+
+Deleting a document must require confirmation.
+
+Duplicating a document must create an independent copy.
+
+Editing a duplicate must not modify the original.
+
+All document operations must work without authentication or a remote database.
+
+---
+
+# 7. RESUME DATA MODEL
+
+Create a strongly typed, extensible TypeScript data model.
+
+Use a single canonical resume document as the source of truth.
+
+Suggested structure:
+
+`ResumeDocument`
+
+- id
+- name
+- createdAt
+- updatedAt
+- schemaVersion
+- personal
+- professionalSummary
+- experiences[]
+- education[]
+- skills[]
+- languages[]
+- projects[]
+- certifications[]
+- awards[]
+- volunteerExperience[]
+- customSections[]
+- sectionConfiguration
+- selectedTemplate
+- designConfiguration
+- targetRole
+- targetJobDescription
+
+### Personal information
+
+- id
+- fullName
+- professionalHeadline
+- email
+- phone
+- location
+- LinkedIn URL
+- portfolio URL
+- professional website
+- profilePhotoReference
+
+### Experience
+
+Each experience must have:
+
+- id
+- jobTitle
+- company
+- employmentType
+- location
+- startDate
+- endDate
+- isCurrent
+- achievements[]
+- displayOrder
+
+Each achievement must have its own stable ID.
+
+### Education
+
+- id
+- qualification
+- institution
+- location
+- startDate
+- endDate
+- description
+- displayOrder
+
+### Skills
+
+- id
+- name
+- category
+- displayOrder
+
+### Languages
+
+- id
+- name
+- proficiency
+- displayOrder
+
+Supported proficiency levels:
+
+- Native.
+- Fluent.
+- Advanced.
+- Intermediate.
+- Basic.
+
+### Projects
+
+- id
+- title
+- description
+- technologies[]
+- projectURL
+- displayOrder
+
+### Certifications
+
+- id
+- name
+- issuingOrganization
+- issueDate
+- credentialURL
+- displayOrder
+
+### Awards
+
+- id
+- title
+- issuingOrganization
+- date
+- description
+
+### Volunteer experience
+
+- id
+- role
+- organization
+- location
+- startDate
+- endDate
+- description
+
+### Custom sections
+
+Allow users to create optional custom sections.
+
+Each custom section must support:
+
+- Section title.
+- Description.
+- Repeatable entries.
+- Reordering.
+- Deletion.
+- Visibility settings.
+
+### Section configuration
+
+Maintain:
+- Section order.
+- Visibility.
+- Custom section order.
+- Template-specific display preferences.
+
+All repeatable elements must use stable unique IDs.
+
+Never rely on array indexes as permanent React keys.
+
+Changing the template must never delete or modify resume content.
+
+All templates, preview components, and PDF export must consume the same canonical resume data.
+
+---
+
+# 8. PERSONAL PROFILE WORKSPACE
+
+Create an organized personal profile editor.
+
+Fields:
+
+- Full name.
+- Professional headline.
+- Email.
+- Phone.
+- Location.
+- LinkedIn URL.
+- Portfolio URL.
+- Website.
+- Professional summary.
+
+Provide:
+- Appropriate input types.
+- Inline validation.
+- Character guidance where useful.
+- Clear labels.
+- Helpful placeholder examples.
+- Accessible error messages.
+
+Validate email and URL formats without being unnecessarily restrictive.
+
+All edits must update the canonical resume state.
+
+The preview must update automatically.
+
+---
+
+# 9. PROFILE IMAGE MANAGEMENT
+
+Implement a complete image-management workflow.
+
+### Upload functionality
+
+Support:
+- JPG.
+- JPEG.
+- PNG.
+- WebP.
+
+Requirements:
+
+1. Allow image selection from the user's device.
+2. Validate file type.
+3. Validate maximum file size.
+4. Display an immediate image preview.
+5. Provide image removal.
+6. Provide image visibility controls.
+7. Allow adjustment of image positioning.
+8. Support template-specific image shapes.
+9. Preserve uploaded images after refresh.
+10. Include the actual uploaded image in PDF export.
+
+### Image processing
+
+Use browser-side canvas processing to:
+
+- Resize excessively large images.
+- Compress uploaded files.
+- Preserve a reasonable visual quality.
+- Generate an appropriate thumbnail where useful.
+
+Use IndexedDB for reliable binary image persistence.
+
+Store the image reference in the canonical resume data.
+
+Do not fill localStorage with unnecessarily large base64 image strings.
+
+Handle unavailable storage and quota errors gracefully.
+
+A missing image must never crash the application.
+
+---
+
+# 10. DATE MANAGEMENT
+
+Implement functional native date selection controls.
+
+Do not create decorative calendar components.
+
+Use:
+
+`input type="month"`
+
+for employment, education, and certification dates.
+
+Internally store dates as:
+
+`YYYY-MM`
+
+Display dates professionally.
+
+Example:
+
+`Feb 2022 – Oct 2025`
+
+### Current employment
+
+Provide a checkbox:
+
+"Currently working here"
+
+When selected:
+- Disable the end-date input.
+- Clear the existing end date if necessary.
+- Display "Present" in the resume.
+- Preserve the start date.
+
+### Validation
+
+Prevent an end date earlier than a start date.
+
+Allow incomplete entries.
+
+Empty date values must not cause errors.
+
+Support modern Chrome, Edge, and Safari.
+
+---
+
+# 11. PROFESSIONAL EXPERIENCE EDITOR
+
+Create a complete experience-management workspace.
+
+Each experience entry must support:
+
+- Job title.
+- Company.
+- Employment type.
+- Location.
+- Start month.
+- End month.
+- Currently working checkbox.
+- Achievements.
+
+### Achievement editor
+
+Each achievement must:
+- Be independently editable.
+- Support multiple lines where appropriate.
+- Be individually removable.
+- Support addition of new bullets.
+- Be reorderable.
+
+Provide:
+
+- Add Experience.
+- Delete Experience.
+- Add Achievement.
+- Remove Achievement.
+- Improve Wording.
+- Move Up.
+- Move Down.
+
+Deleting an entry must not change other entries.
+
+Reordering must work correctly.
+
+Do not silently discard user input.
+
+Use immutable state updates.
+
+---
+
+# 12. EDUCATION EDITOR
+
+Build a repeatable education section.
+
+Fields:
+
+- Degree or qualification.
+- Institution.
+- Location.
+- Start month.
+- End month.
+- Description.
+
+Provide:
+- Add Education.
+- Delete Education.
+- Reorder Education.
+
+Support incomplete entries.
+
+Display education consistently across every template.
+
+---
+
+# 13. SKILLS WORKSPACE
+
+Build an interactive skill-management system.
+
+Features:
+
+- Add a skill.
+- Press Enter to add.
+- Click Add to add.
+- Remove individual skills.
+- Reorder skills.
+- Categorize skills.
+- Prevent duplicates.
+- Trim whitespace.
+- Ignore empty values.
+
+Support categories such as:
+
+- Technical Skills.
+- Software and Tools.
+- Cloud Platforms.
+- Programming Languages.
+- Infrastructure.
+- Management.
+- Communication.
+- Business Skills.
+
+Provide context-aware skill suggestions.
+
+Suggestions must come from an internal, locally maintained profession-to-skills mapping.
+
+Provide these categories at minimum:
+
+- Software Developer.
+- Cloud Engineer.
+- DevOps Engineer.
+- Systems Administrator.
+- Data Analyst.
+- UI/UX Designer.
+- Digital Marketer.
+- Project Manager.
+- Accountant.
+- Sales Professional.
+- Teacher.
+- HR Professional.
+- Business Analyst.
+
+Users must be able to edit and remove suggestions before adding them.
+
+Never automatically insert unwanted skills.
+
+---
+
+# 14. LANGUAGE MANAGEMENT
+
+Build a fully functional language editor.
+
+Each language entry must support:
+
+- Language name.
+- Proficiency level.
+- Reordering.
+- Editing.
+- Deletion.
+
+Provide the following proficiency options:
+
+- Native.
+- Fluent.
+- Advanced.
+- Intermediate.
+- Basic.
+
+Example:
+
+English — Fluent
+
+Bengali — Native
+
+German — Intermediate
+
+Do not represent proficiency through invented percentages or misleading progress bars.
+
+Display languages appropriately for the selected design.
+
+Include them in PDF exports.
+
+---
+
+# 15. PROJECTS, CERTIFICATIONS, AWARDS AND ADDITIONAL SECTIONS
+
+Implement optional resume sections.
+
+### Projects
+
+Fields:
+- Project title.
+- Description.
+- Technologies.
+- Project URL.
+
+### Certifications
+
+Fields:
+- Certification name.
+- Issuing organization.
+- Issue date.
+- Credential URL.
+
+### Awards
+
+Fields:
+- Award title.
+- Organization.
+- Date.
+- Description.
+
+### Volunteer experience
+
+Fields:
+- Position.
+- Organization.
+- Location.
+- Start date.
+- End date.
+- Description.
+
+Each section must support:
+
+- Add.
+- Edit.
+- Delete.
+- Reorder.
+- Visibility settings.
+
+Only display sections with meaningful information.
+
+Do not leave empty headings in the exported document.
+
+---
+
+# 16. SECTION ORDER AND CUSTOMIZATION
+
+Provide functionality that allows users to control the order of resume sections.
+
+Users must be able to:
+
+- Move sections up.
+- Move sections down.
+- Hide sections.
+- Show hidden sections.
+- Rename custom sections.
+- Add custom sections.
+- Remove custom sections.
+
+The selected order must be reflected in the resume preview.
+
+The same order must be retained in PDF export.
+
+Do not make the functionality template-dependent unless a specific template has a clearly documented layout restriction.
+
+---
+
+# 17. ORIGINAL RESUME DESIGN COLLECTION
+
+Create four original professional resume designs.
+
+Each must have:
+- Its own layout.
+- Its own typography hierarchy.
+- Its own spacing system.
+- Its own information architecture.
+- Its own visual identity.
+
+Do not create four copies of the same design with different colors.
+
+Do not reproduce conventional resume templates from other applications.
+
+## DESIGN 1 — SIGNAL
+
+Purpose:
+
+Professional, ATS-conscious applications.
+
+Design direction:
+
+- Single-column document.
+- Strong typographic hierarchy.
+- Prominent candidate name.
+- Carefully spaced section headings.
+- Clear employment timelines.
+- Subtle horizontal rules.
+- No decorative sidebars.
+- No unnecessary graphic elements.
+
+The layout must prioritize straightforward reading and document extraction.
+
+Photo:
+Hidden by default.
+
+## DESIGN 2 — CONTOUR
+
+Purpose:
+
+Professionals with substantial technical or operational experience.
+
+Design direction:
+
+- Structured editorial layout.
+- Distinctive header area.
+- Narrow metadata column where appropriate.
+- Main employment and achievement area.
+- Strong section alignment.
+- Restrained use of the brand accent.
+- Clearly separated skill groups.
+
+Do not turn the metadata column into a large decorative color block.
+
+Photo:
+Optional.
+
+## DESIGN 3 — FIELDNOTE
+
+Purpose:
+
+Creative, business, marketing, and product professionals.
+
+Design direction:
+
+- Editorial typography.
+- Spacious introduction.
+- Distinctive title treatment.
+- Carefully arranged content blocks.
+- Subtle accent markers.
+- Visually interesting section transitions.
+- Strong use of white space.
+
+Photo:
+Optional.
+
+The design must remain professional and readable.
+
+## DESIGN 4 — SUMMIT
+
+Purpose:
+
+Senior professionals, managers, consultants, and executives.
+
+Design direction:
+
+- Strong executive header.
+- Refined typography.
+- Compact but readable layout.
+- Prominent professional profile.
+- Clearly presented achievements.
+- Highly organized career history.
+- Carefully controlled accent treatment.
+
+Avoid exaggerated gold decorations and generic luxury-template styling.
+
+Photo:
+Optional.
+
+### Template gallery
+
+Design a dedicated Design Studio.
+
+Each template card must contain:
+
+- Miniature preview.
+- Template name.
+- Description.
+- Best-use recommendation.
+- Select action.
+
+Selecting a template must update the document preview immediately.
+
+Template changes must never affect the user's content.
+
+Each template must support all standard resume sections.
+
+The chosen template must also be used for PDF export.
+
+---
+
+# 18. PERSONALIZATION CONTROLS
+
+Provide a Design Studio with customization options.
+
+### Accent palette
+
+Provide at least four carefully selected accent options:
+
+- Forest.
+- Amber.
+- Slate.
+- Terracotta.
+
+Suggested colors:
+
+Forest: `#183B36`
+
+Amber: `#D69A43`
+
+Slate: `#475569`
+
+Terracotta: `#B65E45`
+
+### Additional controls
+
+Where compatible with a template, provide:
+
+- Font-size adjustment.
+- Section-spacing adjustment.
+- Compact or comfortable document density.
+- Profile photo visibility.
+- Photo positioning.
+- Section divider visibility.
+
+Do not expose controls that cannot be implemented reliably.
+
+Changes must update the preview immediately.
+
+All design settings must persist and be reflected in PDF export.
+
+Preserve each template's individual design identity.
+
+---
+
+# 19. LIVE DOCUMENT RENDERING
+
+The resume preview must be an actual HTML/CSS document.
+
+It must not be a mock image.
+
+Use real A4 dimensions:
+
+- Width: 210 mm.
+- Height: 297 mm per page.
+
+At standard 96 DPI, approximate dimensions are:
+
+- 794 px wide.
+- 1123 px high.
+
+Use these dimensions for document layout calculations.
+
+### Rendering requirements
+
+The document must:
+
+- Reflect the active resume data.
+- Update as users type.
+- Reflect selected design settings.
+- Show the uploaded photo when enabled.
+- Display correctly formatted dates.
+- Respect the user's section order.
+- Hide empty sections.
+- Wrap long content.
+- Preserve readable typography.
+- Avoid overlapping elements.
+- Support multiple pages.
+
+### Critical architecture requirement
+
+Use a shared ResumeDocument rendering system for:
+
+1. Live preview.
+2. PDF export.
+
+Do not maintain an independent simplified PDF design.
+
+Do not create a plain-text fallback and call it a completed export.
+
+The preview can be scaled visually, but the underlying document must maintain its natural A4 dimensions.
+
+PDF export must never capture a zoomed-down preview.
+
+### Multiple pages
+
+Support long resumes.
+
+Never silently crop content.
+
+Avoid splitting:
+- Section headings from their first content item.
+- Individual achievement bullets.
+- Education records.
+- Project records.
+- Certification records.
+
+Use deterministic pagination.
+
+Where a long section extends across pages, continue the section cleanly and maintain consistent formatting.
+
+---
+
+# 20. CAREER REVIEW AND ATS READINESS
+
+Create a dedicated Career Review workspace.
+
+This feature must evaluate actual resume data.
+
+Do not claim to perform a genuine third-party ATS compatibility test.
+
+Label the score:
+
+"Resume Readiness Estimate"
+
+Maximum score: 100.
+
+Suggested scoring model:
+
+Contact information: 15 points.
+- Valid email.
+- Valid phone.
+
+Professional introduction: 15 points.
+- Professional headline exists.
+- Summary contains meaningful information.
+
+Experience quality: 20 points.
+- At least one experience entry.
+- Meaningful achievement descriptions.
+- Clear job titles and company names.
+
+Skills coverage: 10 points.
+- At least five relevant skills.
+
+Education: 10 points.
+- Qualification.
+- Institution.
+
+Achievement language: 10 points.
+- Strong action verbs.
+- Clear outcome-oriented descriptions.
+
+Document consistency: 10 points.
+- Valid dates.
+- Consistent formatting.
+
+Completeness: 10 points.
+- Relevant additional sections where applicable.
+- No obvious incomplete records.
+
+The score must be calculated using actual application data.
+
+Do not award points for fields that have no meaningful content.
+
+### Review interface
+
+Show:
+
+- Overall readiness score.
+- Progress visualization.
+- Completed checks.
+- Incomplete checks.
+- Specific improvement recommendations.
+
+Each recommendation should navigate to the corresponding editing section.
+
+The score must update immediately when relevant information changes.
+
+---
+
+# 21. JOB DESCRIPTION MATCH ANALYSIS
+
+Add a feature called Job Fit Lab.
+
+This is a key product differentiator.
+
+Allow users to paste a job description into an analysis area.
+
+The application must compare the resume against the supplied job description locally.
+
+No external AI API is permitted.
+
+### Analysis functionality
+
+Extract relevant terms and phrases from the job description.
+
+Identify:
+- Relevant skills.
+- Technical keywords.
+- Tools and technologies.
+- Role-specific terminology.
+- Important qualifications.
+
+Compare these against the resume's:
+
+- Professional headline.
+- Summary.
+- Experience.
+- Skills.
+- Projects.
+- Certifications.
+
+Display:
+
+1. Matching keywords.
+2. Potentially missing keywords.
+3. Keyword coverage estimate.
+4. Sections that may need improvement.
+5. Specific recommendations.
+
+### Accuracy and honesty
+
+Do not claim that a simple keyword comparison guarantees ATS success.
+
+Do not invent qualifications.
+
+Do not automatically insert missing skills.
+
+Do not encourage the user to claim experience they do not have.
+
+Clearly distinguish between:
+- Keywords found.
+- Keywords not found.
+- Recommendations requiring user verification.
+
+All analysis must run locally in the browser.
+
+---
+
+# 22. BUILT-IN WRITING COACH
+
+Create a writing assistant called Writing Coach.
+
+It must work without external AI services.
+
+Do not claim that a large language model is connected.
+
+Use deterministic text transformations, professional writing patterns, and context-aware templates.
+
+### Feature A — Professional summary
+
+Provide:
+
+"Create Draft"
+
+Use:
+- Professional headline.
+- Work history.
+- Skills.
+- Experience descriptions.
+- Relevant projects.
+
+Generate a professional summary.
+
+Support different profession categories.
+
+Never invent:
+- Years of experience.
+- Qualifications.
+- Metrics.
+- Employers.
+- Projects.
+- Achievements.
+
+If insufficient information exists, explain which details are missing.
+
+### Feature B — Improve achievements
+
+Provide:
+
+"Improve Wording"
+
+Example:
+
+Input:
+
+"Worked on AWS and fixed server problems."
+
+Output:
+
+"Supported AWS infrastructure operations and investigated server-related incidents to maintain service reliability."
+
+Preserve the original meaning.
+
+Never invent measurable outcomes.
+
+Never add percentages or numerical achievements that the user did not provide.
+
+Present the improved version as a suggestion.
+
+The user must be able to accept, edit, or dismiss it.
+
+Do not silently replace existing content.
+
+### Feature C — Skill suggestions
+
+Use an internal profession-to-skills mapping.
+
+Allow users to select relevant suggestions.
+
+Prevent duplicates.
+
+### Feature D — Writing quality checks
+
+Detect:
+
+- Repeated phrases.
+- Obvious spelling issues where local checking is available.
+- Weak action verbs.
+- Very short descriptions.
+- Excessive repetition.
+- Empty or incomplete statements.
+
+Keep all actions transparent.
+
+---
+
+# 23. PROFESSIONAL SAMPLE DOCUMENT
+
+The application must open with a complete fictional sample resume.
+
+Use this sample:
+
+Candidate:
+
+Name: Rohan Mehta
+
+Professional Headline: Cloud Platform Engineer
+
+Email: rohan.mehta@example.com
+
+Phone: +91 98765 43210
+
+Location: Bengaluru, India
+
+LinkedIn: linkedin.com/in/rohan-mehta-demo
+
+### Professional Summary
+
+Cloud Platform Engineer with experience supporting cloud infrastructure, backend applications, deployment workflows, and operational reliability. Skilled in AWS services, infrastructure provisioning, monitoring, incident investigation, and backend development. Experienced in collaborating with engineering and operations teams to maintain stable environments and improve application performance.
+
+### Experience
+
+Cloud Platform Engineer
+
+Company: Nimbus Technologies
+
+Location: Bengaluru, India
+
+January 2023 – Present
+
+Achievements:
+
+- Provision and maintain cloud infrastructure using Infrastructure as Code practices.
+- Support AWS services, including EC2, Lambda, ECS, S3, and networking components.
+- Investigate application and infrastructure incidents using logs and monitoring dashboards.
+- Collaborate with developers to troubleshoot backend application issues.
+- Support deployment validation and environment configuration activities.
+
+Software Engineer
+
+Company: Vertex Systems
+
+Location: Pune, India
+
+July 2020 – December 2022
+
+Achievements:
+
+- Developed and maintained backend application functionality.
+- Supported REST API integrations and database connectivity.
+- Investigated application errors and production incidents.
+- Collaborated with team members to improve service reliability.
+- Participated in development, testing, and release activities.
+
+### Education
+
+Bachelor of Technology in Computer Science
+
+Western Institute of Technology
+
+June 2016 – May 2020
+
+### Skills
+
+- AWS.
+- EC2.
+- Lambda.
+- ECS.
+- S3.
+- Terraform.
+- Node.js.
+- REST APIs.
+- SQL.
+- Git.
+- Grafana.
+- Incident Management.
+
+### Languages
+
+- English — Fluent.
+- Hindi — Native.
+- Bengali — Fluent.
+
+### Certifications
+
+AWS Cloud Practitioner
+
+Amazon Web Services
+
+March 2025
+
+### Sample-data requirements
+
+This is fictional demonstration information.
+
+Use it only as initial sample content.
+
+Users must be able to:
+- Edit it.
+- Replace it.
+- Delete it.
+- Restore it using Load Sample.
+
+Do not load a random profile image.
+
+Do not invent a profile photo.
+
+The application must work correctly without one.
+
+---
+
+# 24. LOCAL PERSISTENCE AND DATA SAFETY
+
+All resume data must persist after refresh.
+
+Use:
+
+- localStorage for structured document data and settings.
+- IndexedDB for binary photos and larger assets.
+
+Implement a versioned storage schema.
+
+### Persistence requirements
+
+Save:
+- Personal details.
+- Summary.
+- Experience.
+- Achievements.
+- Education.
+- Skills.
+- Languages.
+- Projects.
+- Certifications.
+- Awards.
+- Volunteer experience.
+- Custom sections.
+- Template selection.
+- Design settings.
+- Document metadata.
+- Job description analysis inputs where appropriate.
+
+### Reliability
+
+Handle:
+- Missing storage.
+- Corrupted JSON.
+- Storage quota errors.
+- IndexedDB errors.
+- Unsupported browser environments.
+- Old schema versions.
+
+Avoid hydration mismatch errors.
+
+Do not access browser-only APIs during server rendering.
+
+Restore saved documents correctly after refresh.
+
+Show a real save state.
+
+### Data export and backup
+
+Provide an option to export a resume's structured JSON data.
+
+Allow users to import a previously exported CLOVER JSON backup.
+
+Validate imported data before replacing the current document.
+
+Never overwrite existing work without confirmation.
+
+Do not import arbitrary executable content.
+
+---
+
+# 25. LOAD SAMPLE AND NEW DOCUMENT ACTIONS
+
+### Load Sample
+
+Restore the original fictional sample resume.
+
+The action must:
+- Require confirmation when the current document contains user data.
+- Restore all sample sections.
+- Restore default design settings.
+- Update the preview.
+- Update the review score.
+
+### New Document
+
+Create a genuinely blank resume.
+
+The action must:
+- Confirm before replacing the current editing context.
+- Avoid modifying existing saved documents.
+- Generate new unique document IDs.
+- Start with a clean document structure.
+
+Never silently destroy existing user information.
+
+---
+
+# 26. PDF EXPORT — CRITICAL IMPLEMENTATION REQUIREMENT
+
+The application must generate an actual downloadable PDF of the selected resume.
+
+This is a core feature, not an optional enhancement.
+
+Use:
+- html2canvas-pro.
+- jsPDF.
+
+### Export interface
+
+Provide an Export Center.
+
+Allow users to:
+
+- Export the current document.
+- Verify the selected design.
+- See the number of pages.
+- View an export progress indicator.
+- Download the finished PDF.
+
+### Required export workflow
+
+When the user clicks Download PDF:
+
+1. Validate the current resume state.
+2. Prevent duplicate export actions.
+3. Read the latest canonical resume data.
+4. Render the same ResumeDocument component used by the preview.
+5. Render it in an export-specific container.
+6. Give the export container actual A4 dimensions.
+7. Ensure it is mounted and available for browser rendering.
+8. Do not use `display: none`.
+9. Wait for React rendering.
+10. Wait for `document.fonts.ready`.
+11. Wait for all images to finish loading.
+12. Ensure the uploaded photo is available.
+13. Capture the document at an appropriate quality, preferably scale 2.
+14. Preserve styling, typography, colors, borders, and image positioning.
+15. Use jsPDF with A4 portrait dimensions.
+16. Add pages in the correct order.
+17. Save the PDF automatically.
+18. Display a success notification.
+19. Restore the export button state.
+
+### Pagination
+
+Do not capture an arbitrarily long resume into one enormous canvas.
+
+Use deterministic page containers or a reliable page-aware pagination process.
+
+Each exported page must have:
+- A4 dimensions.
+- Consistent background.
+- Correct CLOVERs.
+- Appropriate typography.
+- Correct page order.
+
+Avoid splitting individual content blocks unnecessarily.
+
+Never silently omit or crop content.
+
+Handle long descriptions and long achievement lists.
+
+Do not stretch content to make it fit.
+
+### Filename
+
+Generate a safe filename using the candidate's name.
+
+Example:
+
+`Rohan_Mehta_Resume.pdf`
+
+Sanitize unsupported filename characters.
+
+### Error handling
+
+Show useful errors when:
+- Image loading fails.
+- Canvas generation fails.
+- Browser memory limits are encountered.
+- PDF generation fails.
+- The document cannot be rendered.
+
+Never display a success message if the file was not actually generated.
+
+### Essential export requirements
+
+The exported PDF must correspond to the currently selected template and design settings.
+
+It must not:
+- Export the editor interface.
+- Export application navigation.
+- Export the review workspace.
+- Revert to a generic resume.
+- Ignore the selected accent.
+- Lose the uploaded photograph.
+- Capture only the first page.
+- Include hidden sections.
+- Capture an incomplete render.
+- Export clipped or scaled-down content.
+
+### Mandatory PDF scenarios
+
+Scenario 1:
+
+Select Signal, add professional experience, skills, education, and languages.
+
+Expected:
+
+The downloadable PDF contains the Signal design and all applicable information.
+
+Scenario 2:
+
+Switch to Contour.
+
+Expected:
+
+The PDF uses Contour.
+
+Scenario 3:
+
+Upload a photo and enable it.
+
+Expected:
+
+The actual uploaded image appears in the exported PDF.
+
+Scenario 4:
+
+Change the accent color.
+
+Expected:
+
+The PDF reflects the new accent.
+
+Scenario 5:
+
+Create a lengthy resume.
+
+Expected:
+
+Additional pages are generated without missing or clipped content.
+
+---
+
+# 27. ACCESSIBILITY AND USER EXPERIENCE
+
+Treat accessibility as an implementation requirement.
+
+Provide:
+
+- Semantic HTML.
+- Proper input labels.
+- Keyboard-accessible navigation.
+- Visible focus states.
+- Accessible dialog controls.
+- Appropriate ARIA labels.
+- Useful validation messages.
+- Sufficient color contrast.
+- Screen-reader-friendly status updates.
+
+Do not depend on color alone to communicate status.
+
+All buttons must have meaningful labels.
+
+Interactive controls must be usable without a mouse wherever practical.
+
+Ensure confirmation dialogs support keyboard navigation.
+
+---
+
+# 28. APPLICATION FEEDBACK AND ERROR HANDLING
+
+Provide a consistent notification system.
+
+Use appropriate toast notifications for:
+
+- Successful saves.
+- Successful imports.
+- Successful exports.
+- Failed uploads.
+- Invalid input.
+- Deleted documents.
+- Restored sample documents.
+
+Use loading indicators for expensive actions.
+
+Provide empty states for:
+- No experience entries.
+- No education entries.
+- No skills.
+- No certifications.
+- No projects.
+- No profile image.
+
+Empty states should explain the next action.
+
+Do not use fake content to make empty sections look functional.
+
+### Every button must work
+
+For every visible button, implement the corresponding action.
+
+Do not create:
+- Buttons that do nothing.
+- Navigation links without destinations.
+- Template selectors that only change a label.
+- Export controls that do not export.
+- Add actions that do not update application state.
+- Decorative controls with no behavior.
+
+If a feature cannot be implemented, do not present it as functional.
+
+---
+
+# 29. PERFORMANCE AND SECURITY
+
+The application must remain responsive when editing large resumes.
+
+Requirements:
+
+- Avoid unnecessary component re-renders.
+- Use memoization where justified.
+- Optimize uploaded images.
+- Avoid unnecessarily large application bundles.
+- Dynamically import browser-only PDF libraries.
+- Prevent browser-only APIs from running during server rendering.
+- Validate all imported JSON.
+- Sanitize user-generated text before rendering.
+- Avoid injecting untrusted HTML.
+- Keep user resume data in local browser storage.
+- Avoid logging personal resume content to the console.
+
+The application must not transmit resume information to external services.
+
+Be transparent about local-only storage.
+
+---
+
+# 30. PROJECT STRUCTURE
+
+Use a maintainable project architecture.
+
+Suggested structure:
+
+```text
+app/
+  layout.tsx
+  page.tsx
+  globals.css
+
+components/
+  app-shell/
+    AppHeader.tsx
+    NavigationRail.tsx
+    WorkspaceLayout.tsx
+
+  resume/
+    ResumeDocument.tsx
+    ResumeCanvas.tsx
+    DocumentPage.tsx
+
+  editors/
+    PersonalProfileEditor.tsx
+    ExperienceEditor.tsx
+    EducationEditor.tsx
+    SkillsEditor.tsx
+    LanguageEditor.tsx
+    ProjectsEditor.tsx
+    CertificationsEditor.tsx
+    AwardsEditor.tsx
+    CustomSectionEditor.tsx
+
+  templates/
+    SignalTemplate.tsx
+    ContourTemplate.tsx
+    FieldnoteTemplate.tsx
+    SummitTemplate.tsx
+
+  design-studio/
+    DesignGallery.tsx
+    DesignControls.tsx
+
+  career-review/
+    ResumeReadiness.tsx
+    JobFitLab.tsx
+    ReviewRecommendations.tsx
+
+  writing-coach/
+    WritingCoach.tsx
+
+  export/
+    ExportCenter.tsx
+    ExportProgress.tsx
+
+  shared/
+    ConfirmDialog.tsx
+    EmptyState.tsx
+    FormField.tsx
+    StatusIndicator.tsx
+
+lib/
+  resume/
+    types.ts
+    initial-data.ts
+    validation.ts
+    store.ts
+    storage.ts
+    document-manager.ts
+    date-formatting.ts
+    section-configuration.ts
+
+  templates/
+    template-registry.ts
+
+  writing/
+    writing-coach.ts
+    summary-generator.ts
+    bullet-improvements.ts
+    skill-suggestions.ts
+
+  analysis/
+    readiness-score.ts
+    keyword-extractor.ts
+    job-fit-analysis.ts
+
+  export/
+    pdf-exporter.ts
+    pagination.ts
+
+  utils/
+    image-processing.ts
+    filename.ts
+
+```
+
+Adapt the structure where required, but maintain separation of responsibilities.
+
+---
+
+# 31. TESTING STRATEGY
+
+Do not consider the application complete because the main page renders.
+
+Implement appropriate unit, component, and end-to-end tests.
+
+Use a suitable combination of:
+- Vitest.
+- React Testing Library.
+- Playwright.
+
+### Functional test cases
+
+TEST 1 — Personal information
+
+Change the candidate's name.
+
+Expected:
+- Store updates.
+- Preview changes immediately.
+- Saved data remains correct.
+
+TEST 2 — Work experience
+
+Add an experience entry.
+
+Expected:
+- Entry appears in the editor.
+- Entry appears in the preview.
+- Stable ID is generated.
+
+TEST 3 — Dates
+
+Select start and end months.
+
+Expected:
+- Dates display correctly.
+- Invalid ranges are rejected.
+
+TEST 4 — Present employment
+
+Enable Currently Working Here.
+
+Expected:
+- End-date control is disabled.
+- End date is cleared.
+- Resume displays Present.
+
+TEST 5 — Photo upload
+
+Upload a valid image.
+
+Expected:
+- Image appears in preview.
+- Image survives page refresh.
+- Image is included in PDF export.
+
+TEST 6 — Invalid upload
+
+Upload an unsupported file.
+
+Expected:
+- Upload is rejected.
+- Useful error is displayed.
+- Existing photo remains intact.
+
+TEST 7 — Skills
+
+Add and remove skills.
+
+Expected:
+- Duplicates are rejected.
+- Whitespace is cleaned.
+- Preview updates.
+
+TEST 8 — Languages
+
+Add multiple languages.
+
+Expected:
+- Each language displays with its selected proficiency.
+- All entries survive refresh.
+
+TEST 9 — Template switching
+
+Switch through all four designs.
+
+Expected:
+- Layout changes.
+- Resume information remains unchanged.
+- Correct design appears in PDF export.
+
+TEST 10 — Personalization
+
+Change the accent color and document spacing.
+
+Expected:
+- Preview updates.
+- Settings persist.
+- PDF matches the selected settings.
+
+TEST 11 — Section ordering
+
+Move Experience above Education.
+
+Expected:
+- Preview reflects the new order.
+- PDF uses the same order.
+
+TEST 12 — Writing Coach
+
+Improve an achievement.
+
+Expected:
+- A suggestion is produced.
+- User can accept, edit, or dismiss it.
+- No unsupported achievements or metrics are invented.
+
+TEST 13 — Job Fit Lab
+
+Paste a job description.
+
+Expected:
+- Relevant keywords are extracted.
+- Matching terms are identified.
+- Missing terms are shown.
+- Recommendations are displayed.
+- No data is sent to an external AI service.
+
+TEST 14 — Local persistence
+
+Refresh the browser.
+
+Expected:
+- All documents are restored.
+- Design preferences are restored.
+- Uploaded images are available.
+
+TEST 15 — Multiple documents
+
+Duplicate an existing resume and edit the duplicate.
+
+Expected:
+- Original document is unchanged.
+- Duplicate has an independent state.
+
+TEST 16 — JSON backup
+
+Export a resume backup and import it again.
+
+Expected:
+- Resume information is preserved.
+- Invalid imports are rejected safely.
+
+TEST 17 — PDF export
+
+Download a resume.
+
+Expected:
+- Actual PDF file is generated.
+- Selected design is preserved.
+- Uploaded photo is included.
+- All pages are included.
+- Filename is valid.
+
+TEST 18 — Long resume
+
+Create a resume containing several experience entries and lengthy descriptions.
+
+Expected:
+- Additional pages are generated.
+- Content is not clipped.
+- Page ordering is correct.
+- Formatting remains consistent.
+
+TEST 19 — Mobile
+
+Open the application on a mobile viewport.
+
+Expected:
+- Navigation is usable.
+- Editing works.
+- Preview works.
+- PDF export works.
+- No horizontal overflow exists.
+
+TEST 20 — Production build
+
+Run the production build.
+
+Expected:
+- No TypeScript errors.
+- No unresolved imports.
+- No invalid dependencies.
+- No hydration errors.
+- No major rendering errors.
+
+---
+
+# 32. IMPLEMENTATION PROCESS
+
+Follow a disciplined development workflow.
+
+### Phase 1 — Inspect
+
+Inspect the existing repository.
+
+Understand:
+- Existing project structure.
+- Installed dependencies.
+- Next.js configuration.
+- Existing components.
+- Existing styling.
+- Available execution tools.
+
+Do not overwrite useful existing functionality without understanding it.
+
+### Phase 2 — Establish architecture
+
+Create:
+- TypeScript data models.
+- Canonical state management.
+- Local persistence.
+- Shared document rendering.
+- Template registry.
+- Reusable UI primitives.
+
+### Phase 3 — Build the application shell
+
+Implement:
+- Branding.
+- Navigation rail.
+- Main workspace.
+- Document canvas.
+- Responsive behavior.
+
+### Phase 4 — Implement editing
+
+Implement and connect every resume section.
+
+Verify that all editors update the same canonical document.
+
+### Phase 5 — Implement designs
+
+Build the four independent resume templates.
+
+Ensure each design is genuinely different.
+
+### Phase 6 — Build intelligence features
+
+Implement:
+- Resume readiness review.
+- Job Fit Lab.
+- Writing Coach.
+- Skill suggestions.
+
+### Phase 7 — Implement export
+
+Build and test:
+- Shared document rendering.
+- A4 page generation.
+- Multi-page pagination.
+- PDF generation.
+- Photo inclusion.
+- Error recovery.
+
+### Phase 8 — Persistence and backup
+
+Test:
+- Save.
+- Restore.
+- Import.
+- Export.
+- Duplicate.
+- Delete.
+- Storage errors.
+
+### Phase 9 — Quality assurance
+
+Run the functional tests.
+
+Fix:
+- Broken interactions.
+- Rendering issues.
+- Date errors.
+- Storage problems.
+- PDF defects.
+- Responsive issues.
+- Accessibility problems.
+
+### Phase 10 — Production readiness
+
+Run the production build.
+
+Resolve all detectable errors.
+
+Confirm deployment compatibility with Vercel.
+
+---
+
+# 33. FINAL ACCEPTANCE CRITERIA
+
+The application is complete only when all the following conditions are satisfied:
+
+1. CLOVER has an independent brand identity.
+2. The interface follows the specified editorial workbench design.
+3. The application is responsive.
+4. All resume sections are editable.
+5. All changes update one canonical resume state.
+6. The four designs are independently implemented.
+7. Users can customize supported design settings.
+8. Images upload, persist, and export correctly.
+9. Dates work correctly.
+10. The Writing Coach performs real local transformations.
+11. The readiness score uses actual resume data.
+12. Job Fit Lab performs real local analysis.
+13. Documents persist after refresh.
+14. Multiple resume documents work independently.
+15. JSON backup and restore work.
+16. The preview uses actual HTML/CSS document rendering.
+17. The PDF uses the same rendering system.
+18. Multi-page PDF export works.
+19. No content is silently cropped.
+20. Every visible interactive control works.
+21. Errors are handled gracefully.
+22. Accessibility requirements are addressed.
+23. The production build succeeds.
+
+---
+
+# 34. FINAL DEVELOPMENT INSTRUCTIONS
+
+Build the complete application, not just a demonstration of its interface.
+
+Do not sacrifice functionality for visual polish.
+
+Do not sacrifice visual quality for a quick implementation.
+
+Prioritize work in this order:
+
+1. Sound application architecture.
+2. Reliable canonical resume state.
+3. Functional document editing.
+4. Original application design.
+5. Four independently implemented resume layouts.
+6. Accurate live document rendering.
+7. Reliable multi-page PDF export.
+8. Image upload and persistence.
+9. Career Review and Job Fit Lab.
+10. Writing Coach.
+11. Responsive behavior.
+12. Accessibility and production quality.
+
+Do not silently omit requirements.
+
+Do not replace difficult functionality with decorative controls.
+
+Do not claim that something works without implementing it.
+
+Do not claim to have run tests that you have not actually executed.
+
+When a technical limitation prevents a feature from working, explain the limitation and provide the best viable implementation rather than pretending the feature is complete.
+
+Generate the actual application code.
+
+Install the required dependencies.
+
+Run the application.
+
+Execute the available tests.
+
+Resolve detectable errors.
+
+The final deliverable must be a complete, usable, professionally designed career document studio that allows users to create, customize, manage, review, and download professional resumes.
+
+**The finished product must stand on its own as CLOVER, with a distinct product identity, original interface, independent design language, and reliable functionality.**

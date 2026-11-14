@@ -1,0 +1,8 @@
+{
+  "name": "CLOVER — Career Document Studio",
+  "description": "A personal career-document workspace to create, edit, organize, customize, evaluate, and export professional resumes locally in the browser.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
