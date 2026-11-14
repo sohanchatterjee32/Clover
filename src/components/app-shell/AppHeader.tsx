@@ -16,6 +16,7 @@ import {
   Undo2,
 } from 'lucide-react';
 import { selectActiveDocument, useResumeStore } from '../../lib/resume/store';
+import { PWAInstallButton } from '../pwa/PWAInstallButton';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 
 interface AppHeaderProps {
@@ -341,6 +342,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           >
             <Redo2 className="h-4 w-4" />
           </button>
+        </div>
+
+        {/* Install PWA CTA (tablet/desktop header; mobile uses Overview banner & nav drawer) */}
+        <div className="hidden sm:block">
+          <PWAInstallButton variant="header" />
         </div>
 
         {/* New Document */}

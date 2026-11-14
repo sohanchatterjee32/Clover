@@ -14,6 +14,7 @@ import { ExportCenterWorkspace } from '../export/ExportCenterWorkspace';
 import { ResumeCanvas } from '../resume/ResumeCanvas';
 import { ResumeDocument } from '../resume/ResumeDocument';
 import { ToastViewport } from '../shared/ToastViewport';
+import { OfflineIndicator } from '../pwa/OfflineIndicator';
 import { AppHeader } from './AppHeader';
 import { NavigationRail } from './NavigationRail';
 
@@ -178,6 +179,7 @@ export const WorkspaceLayout: React.FC = () => {
         <ResumeDocument doc={doc} photoDataUrl={photoDataUrl} />
       </div>
 
+      <OfflineIndicator />
       <ToastViewport />
     </div>
   );

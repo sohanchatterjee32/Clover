@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useResumeStore } from '../../lib/resume/store';
 import type { WorkspaceSection } from '../../lib/resume/types';
+import { PWAInstallButton } from '../pwa/PWAInstallButton';
 
 interface NavItem {
   id: WorkspaceSection;
@@ -86,8 +87,13 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
         })}
       </ul>
 
-      <div className="border-t border-[#E4E1D9] px-2 pt-3 text-[11px] leading-relaxed text-[#738078]">
-        Local-only studio. Documents and images remain in your browser.
+      <div className="space-y-3 border-t border-[#E4E1D9] px-2 pt-3">
+        <div className="lg:hidden">
+          <PWAInstallButton variant="header" />
+        </div>
+        <p className="text-[11px] leading-relaxed text-[#738078]">
+          Offline-ready local studio. Documents and images remain on your device.
+        </p>
       </div>
     </nav>
   );

@@ -13,6 +13,7 @@ import {
 import { formatDistanceToNow } from 'date-fns';
 import { selectActiveDocument, useResumeStore } from '../../lib/resume/store';
 import { buildBackupJsonFilename } from '../../lib/utils/filename';
+import { PWAInstallButton } from '../pwa/PWAInstallButton';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { inputBaseClass } from '../shared/FormField';
 
@@ -154,6 +155,8 @@ export const OverviewWorkspace: React.FC = () => {
           Manage your local resume documents, jump directly into editing sections, or back up your structured data as JSON. All content stays privately in your browser.
         </p>
       </div>
+
+      <PWAInstallButton variant="banner" />
 
       {/* Quick Actions */}
       <div className="flex flex-wrap items-center gap-3">
